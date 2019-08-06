@@ -8,7 +8,7 @@ let rainDepth = 1
 let dropWidth = 1
 let dropHeight = 10
 let dropSpeed = 3
-let angle = 90
+let angle = Math.PI / 2
 
 let depthSlider = document.querySelector('.depthSlider')
 depthSlider.oninput = function() {
@@ -35,17 +35,22 @@ heightSlider.oninput = function() {
     dropHeight = this.value
 }
 
+let angleSlider = document.querySelector('.angleSlider')
+angleSlider.oninput = function() {
+    angle = this.value
+}
+
 let drops = []
-let drop = { speed: dropSpeed * (canvas.height / 300), x: Math.random() * canvas.width, y: 0, depth: calculateDepth(rainDepth) }
+let drop = { speed: dropSpeed * (canvas.height / 300), x: Math.random() * canvas.width * 3 - canvas.width, y: 0, depth: calculateDepth(rainDepth) }
 drops.push(drop)
 
 setInterval(onTimerTick, 0);
 
 function onTimerTick() {
 
-    if (counter % 5 === 0) {
+    if (counter % 1 === 0) {
         for (let i = 0; i < rainFreq; i++) {
-            let drop = { speed: dropSpeed * (canvas.height / 400), x: Math.random() * canvas.width, y: 0, depth: calculateDepth(rainDepth) }
+            let drop = { speed: dropSpeed * (canvas.height / 400), x: Math.random() * canvas.width * 3 - canvas.width, y: 0, depth: calculateDepth(rainDepth) }
             drops.push(drop)
         }
     }
@@ -53,10 +58,23 @@ function onTimerTick() {
     g.fillStyle = 'rgb(100, 100, 255)'
     g.fillRect(0, 0, canvas.width, canvas.height)
 
-    g.fillStyle = 'rgb(0, 0, 0)'
+    g.strokeStyle = '#FFFFFF'
     for (let i = 0; i < drops.length; i++) {
-        drops[i].y += drops[i].speed * drops[i].depth
-        g.fillRect(drops[i].x, drops[i].y, dropWidth * drops[i].depth, dropHeight * drops[i].depth)
+        let length = drops[i].speed * drops[i].depth
+        let x = Math.cos(angle) * length
+        let y = Math.sin(angle) * length
+        drops[i].y += y
+        drops[i].x += x
+
+        length = dropHeight * drops[i].depth
+        x = Math.cos(angle) * length
+        y = Math.sin(angle) * length
+
+        g.lineWidth = dropWidth * drops[i].depth
+        g.beginPath();
+        g.moveTo(drops[i].x, drops[i].y);
+        g.lineTo(drops[i].x + x, drops[i].y + y);
+        g.stroke();
         if (drops[i].y > canvas.height) {
             drops.splice(i, 1)
         }
