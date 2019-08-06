@@ -9,6 +9,7 @@ let dropWidth = 1
 let dropHeight = 10
 let dropSpeed = 3
 let angle = Math.PI / 2
+let color = '#8888cc'
 
 let depthSlider = document.querySelector('.depthSlider')
 depthSlider.oninput = function() {
@@ -40,6 +41,11 @@ angleSlider.oninput = function() {
     angle = this.value
 }
 
+let jscolor = document.querySelector('.jscolor')
+jscolor.onchange = function() {
+    color = '#' + this.value
+}
+
 let drops = []
 let drop = { speed: dropSpeed * (canvas.height / 300), x: Math.random() * canvas.width * 3 - canvas.width, y: 0, depth: calculateDepth(rainDepth) }
 drops.push(drop)
@@ -55,10 +61,10 @@ function onTimerTick() {
         }
     }
 
-    g.fillStyle = 'rgb(100, 100, 255)'
+    g.fillStyle = 'rgb(100, 100, 150)'
     g.fillRect(0, 0, canvas.width, canvas.height)
 
-    g.strokeStyle = '#FFFFFF'
+    g.strokeStyle = color
     for (let i = 0; i < drops.length; i++) {
         let length = drops[i].speed * drops[i].depth
         let x = Math.cos(angle) * length
