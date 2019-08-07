@@ -3,13 +3,18 @@ let g = canvas.getContext('2d')
 
 let counter = 0
 
-let rainFreq = 5
+let rainFreq = 10
 let rainDepth = 1
 let dropWidth = 1
 let dropHeight = 10
 let dropSpeed = 3
 let angle = Math.PI / 2
 let color = '#8888cc'
+let xPos = 0
+let yPos = 0
+let scale = 1
+
+let image = new Image(canvas.width, canvas.height)
 
 let depthSlider = document.querySelector('.depthSlider')
 depthSlider.oninput = function() {
@@ -46,14 +51,34 @@ jscolor.onchange = function() {
     color = '#' + this.value
 }
 
+let xSlider = document.querySelector('.xPosSlider')
+xSlider.oninput = function() {
+    xPos = this.value
+}
+
+let ySlider = document.querySelector('.yPosSlider')
+ySlider.oninput = function() {
+    yPos = this.value
+}
+
+let scaleSlider = document.querySelector('.scaleSlider')
+scaleSlider.oninput = function() {
+    scale = this.value
+}
+
+let urlText = document.querySelector('.urlText')
+let urlBtn = document.querySelector('.urlBtn')
+urlBtn.onclick = function() {
+    image.src = urlText.value
+}
+
 let drops = []
-let drop = { speed: dropSpeed * (canvas.height / 300), x: Math.random() * canvas.width * 3 - canvas.width, y: 0, depth: calculateDepth(rainDepth) }
+let drop = { speed: dropSpeed * (canvas.height / 400), x: Math.random() * canvas.width * 3 - canvas.width, y: 0, depth: calculateDepth(rainDepth) }
 drops.push(drop)
 
-setInterval(onTimerTick, 0);
+setInterval(onTimerTick, 5);
 
 function onTimerTick() {
-
     if (counter % 1 === 0) {
         for (let i = 0; i < rainFreq; i++) {
             let drop = { speed: dropSpeed * (canvas.height / 400), x: Math.random() * canvas.width * 3 - canvas.width, y: 0, depth: calculateDepth(rainDepth) }
@@ -63,6 +88,9 @@ function onTimerTick() {
 
     g.fillStyle = 'rgb(100, 100, 150)'
     g.fillRect(0, 0, canvas.width, canvas.height)
+    g.scale(scale, scale)
+    g.drawImage(image, canvas.width * (xPos / 100), canvas.height * (yPos / 100))
+    g.scale(1 / scale, 1 / scale)
 
     g.strokeStyle = color
     for (let i = 0; i < drops.length; i++) {

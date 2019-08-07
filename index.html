@@ -12,51 +12,84 @@
 </head>
 
 <body>
-    <canvas class="canvas" width="1000" height="563"></canvas>
-    <div class="slidercontainer">
-        <div>
-            Depth:
+    <div class="container">
+        <div class="canvascontainer">
+            <canvas class="canvas" width="1600" height="900"></canvas>
         </div>
-        <div>
-            <input type="range" class="depthSlider" value="1" min="0" max="2" step="0.25">
-        </div>
-        <div>
-            Speed: 
-        </div>
-        <div>
-            <input type="range" class="speedSlider" value="3" min="1" max="5" step="0.2">
-        </div>
-        <div>
-            Frequency: 
-        </div>
-        <div>
-            <input type="range" class="freqSlider" value="5" min="0" max="10" step="1">
-        </div>
-        <div>
-            Width:
-        </div>
-        <div>
-            <input type="range" class="widthSlider" value="1" min="1" max="19" step="1">
-        </div>
-        <div>
-            Height: 
-        </div>
-        <div>
-            <input type="range" class="heightSlider" value="10" min="1" max="19" step="1">
-        </div>
-        <div>
-            Angle: 
-        </div>
-        <div>
-            <input type="range" class="angleSlider" value="1.57" min="0.57" max="2.57" step="0.1">
-        </div>
-        <div>
-            Rain Color:
-        </div>
-        <div>
-            <input class="jscolor" value="8888cc">
-        </div>
-    </div>
+        <div class="slidercontainer">
+                <div>
+                    Rain Color:
+                </div>
+                <div>
+                    <input class="jscolor" value="abb5cc">
+                </div>
+                <div>
+                    Depth:
+                </div>
+                <div>
+                    <input type="range" class="depthSlider" value="1" min="0" max="2" step="0.25">
+                </div>
+                <div>
+                    Speed: 
+                </div>
+                <div>
+                    <input type="range" class="speedSlider" value="3" min="1" max="5" step="0.2">
+                </div>
+                <div>
+                    Frequency: 
+                </div>
+                <div>
+                    <input type="range" class="freqSlider" value="10" min="0" max="20" step="1">
+                </div>
+                <div>
+                    Width:
+                </div>
+                <div>
+                    <input type="range" class="widthSlider" value="1" min="1" max="19" step="1">
+                </div>
+                <div>
+                    Height: 
+                </div>
+                <div>
+                    <input type="range" class="heightSlider" value="10" min="1" max="19" step="1">
+                </div>
+                <div>
+                    Angle: 
+                </div>
+                <div>
+                    <input type="range" class="angleSlider" value="1.57" min="0.57" max="2.57" step="0.1">
+                </div>
+                <div>
+                    Image x-position: 
+                </div>   
+                <div>
+                    <input type="range" class="xPosSlider" value="0" min="-100" max="100" step="1">
+                </div>
+                <div>
+                    Image y-position: 
+                </div>   
+                <div>
+                    <input type="range" class="yPosSlider" value="0" min="-100" max="100" step="1">
+                </div>
+                <div>
+                    Image scale: 
+                </div>   
+                <div>
+                    <input type="range" class="scaleSlider" value="1" min="0.1" max="3" step="0.1">
+                </div>
+                <div>
+                    Image URL:
+                </div>
+                <div class="urlDiv">
+                    <div>
+                        <input type="text" class="urlText">  
+                    </div>
+                    <div>
+                        <button class="urlBtn">OK</button>
+                    </div>
+                </div>
+            </div>
+    </div>      
 </body>
 
 <script src="js/main.js"></script>
