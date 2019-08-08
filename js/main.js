@@ -9,10 +9,11 @@ let dropWidth = 1
 let dropHeight = 10
 let dropSpeed = 3
 let angle = Math.PI / 2
-let color = '#8888cc'
+let color = '#ffffff'
 let xPos = 0
 let yPos = 0
 let scale = 1
+let opacity = 0.2
 
 let image = new Image(canvas.width, canvas.height)
 
@@ -72,13 +73,19 @@ urlBtn.onclick = function() {
     image.src = urlText.value
 }
 
-let drops = []
-let drop = { speed: dropSpeed * (canvas.height / 400), x: Math.random() * canvas.width * 3 - canvas.width, y: 0, depth: calculateDepth(rainDepth) }
-drops.push(drop)
+let opacitySlider = document.querySelector('.opacitySlider')
+opacitySlider.oninput = function() {
+    opacity = opacitySlider.value
+}
 
-setInterval(onTimerTick, 5);
+let drops = []
+let startTime = new Date()
+
+setInterval(onTimerTick, 5)
 
 function onTimerTick() {
+    let deltaTime = new Date() - startTime
+    startTime = new Date()
     if (counter % 1 === 0) {
         for (let i = 0; i < rainFreq; i++) {
             let drop = { speed: dropSpeed * (canvas.height / 400), x: Math.random() * canvas.width * 3 - canvas.width, y: 0, depth: calculateDepth(rainDepth) }
@@ -93,8 +100,9 @@ function onTimerTick() {
     g.scale(1 / scale, 1 / scale)
 
     g.strokeStyle = color
+    g.globalAlpha = opacity
     for (let i = 0; i < drops.length; i++) {
-        let length = drops[i].speed * drops[i].depth
+        let length = drops[i].speed * drops[i].depth * (deltaTime / 4)
         let x = Math.cos(angle) * length
         let y = Math.sin(angle) * length
         drops[i].y += y
@@ -113,6 +121,7 @@ function onTimerTick() {
             drops.splice(i, 1)
         }
     }
+    g.globalAlpha = 1.0
     counter++
 }
 
