@@ -9,6 +9,14 @@ html {
     padding: 0px;
     margin: 0px;
     height: 100%;
+    background-color: white;
+    overflow: hidden;
+}
+
+.backgroundDiv {
+    position: absolute;
+    width: 80%;
+    height: 100%;
     background-color: black;
 }
 
@@ -23,19 +31,21 @@ html {
     *display: inline;
     zoom: 1;
     vertical-align: top;
-}
-
-.canvascontainer {
-    padding: 0px;
-    margin: 0px;
-    width: 79%;
     height: 100%;
 }
 
-.slidercontainer {
+.canvascontainer {
+    position: absolute;
     padding: 0px;
     margin: 0px;
-    margin-top: 5px;
+    width: 80%;
+}
+
+.slidercontainer {
+    background-color: white;
+    float: right;
+    padding: 0px;
+    margin: 0px;
     width: 20%;
     height: 100%;
 }
@@ -45,7 +55,7 @@ html {
 }
 
 .slidercontainer div {
-    padding: 0px;
+    padding: 5px;
 }
 
 .urlDiv div {
@@ -59,6 +69,5 @@ html {
 .canvas {
     width: 100%;
     height: 100%;
-    margin-bottom: -3px;
     padding: 0px;
 }

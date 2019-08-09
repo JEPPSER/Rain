@@ -10,12 +10,10 @@ let dropHeight = 10
 let dropSpeed = 3
 let angle = Math.PI / 2
 let color = '#ffffff'
-let xPos = 0
-let yPos = 0
 let scale = 1
 let opacity = 0.2
 
-let image = new Image(canvas.width, canvas.height)
+let backgroundImage = document.querySelector('.backgroundImage')
 
 let depthSlider = document.querySelector('.depthSlider')
 depthSlider.oninput = function() {
@@ -52,25 +50,21 @@ jscolor.onchange = function() {
     color = '#' + this.value
 }
 
-let xSlider = document.querySelector('.xPosSlider')
-xSlider.oninput = function() {
-    xPos = this.value
-}
-
-let ySlider = document.querySelector('.yPosSlider')
-ySlider.oninput = function() {
-    yPos = this.value
-}
-
 let scaleSlider = document.querySelector('.scaleSlider')
 scaleSlider.oninput = function() {
     scale = this.value
+    backgroundImage.height = backgroundImage.naturalHeight * scale
+    backgroundImage.width = backgroundImage.naturalWidth * scale
 }
 
 let urlText = document.querySelector('.urlText')
 let urlBtn = document.querySelector('.urlBtn')
 urlBtn.onclick = function() {
-    image.src = urlText.value
+    backgroundImage.src = urlText.value
+    scale = 1.0
+    scaleSlider.value = 1.0
+    backgroundImage.height = backgroundImage.naturalHeight * scale
+    backgroundImage.width = backgroundImage.naturalWidth * scale
 }
 
 let opacitySlider = document.querySelector('.opacitySlider')
@@ -93,11 +87,7 @@ function onTimerTick() {
         }
     }
 
-    g.fillStyle = 'rgb(100, 100, 150)'
-    g.fillRect(0, 0, canvas.width, canvas.height)
-    g.scale(scale, scale)
-    g.drawImage(image, canvas.width * (xPos / 100), canvas.height * (yPos / 100))
-    g.scale(1 / scale, 1 / scale)
+    g.clearRect(0, 0, canvas.width, canvas.height)
 
     g.strokeStyle = color
     g.globalAlpha = opacity
