@@ -116,5 +116,5 @@ function onTimerTick() {
 }
 
 function calculateDepth(rainDepth) {
-    return 1 - (Math.random() * rainDepth) + rainDepth / 2
+    return 1 - (Math.pow(Math.random(), 0.3) * rainDepth) + rainDepth / 2
 }
