@@ -9,6 +9,7 @@ let dropWidth = 1
 let dropHeight = 10
 let dropSpeed = 3
 let angle = Math.PI / 2
+let angleRandomness = 0
 let color = '#ffffff'
 let scale = 1
 let opacity = 0.2
@@ -42,7 +43,12 @@ heightSlider.oninput = function() {
 
 let angleSlider = document.querySelector('.angleSlider')
 angleSlider.oninput = function() {
-    angle = this.value
+    angle = parseFloat(this.value)
+}
+
+let angleRandomSlider = document.querySelector('.angleRandomSlider')
+angleRandomSlider.oninput = function() {
+    angleRandomness = parseFloat(this.value)
 }
 
 let jscolor = document.querySelector('.jscolor')
@@ -80,11 +86,13 @@ setInterval(onTimerTick, 5)
 function onTimerTick() {
     let deltaTime = new Date() - startTime
     startTime = new Date()
-    if (counter % 1 === 0) {
-        for (let i = 0; i < rainFreq; i++) {
-            let drop = { speed: dropSpeed * (canvas.height / 400), x: Math.random() * canvas.width * 3 - canvas.width, y: 0, depth: calculateDepth(rainDepth) }
-            drops.push(drop)
+    for (let i = 0; i < rainFreq; i++) {
+        let randAngle = Math.random() / (10 - angleRandomness) - (0.5 / (10 - angleRandomness))
+        if (angleRandomness === 0) {
+            randAngle = 0
         }
+        let drop = {angle: angle + randAngle, speed: dropSpeed * (canvas.height / 400), x: Math.random() * canvas.width * 3 - canvas.width, y: 0, depth: calculateDepth(rainDepth) }
+        drops.push(drop)
     }
 
     g.clearRect(0, 0, canvas.width, canvas.height)
@@ -93,14 +101,14 @@ function onTimerTick() {
     g.globalAlpha = opacity
     for (let i = 0; i < drops.length; i++) {
         let length = drops[i].speed * drops[i].depth * (deltaTime / 4)
-        let x = Math.cos(angle) * length
-        let y = Math.sin(angle) * length
+        let x = Math.cos(drops[i].angle) * length
+        let y = Math.sin(drops[i].angle) * length
         drops[i].y += y
         drops[i].x += x
 
         length = dropHeight * drops[i].depth
-        x = Math.cos(angle) * length
-        y = Math.sin(angle) * length
+        x = Math.cos(drops[i].angle) * length
+        y = Math.sin(drops[i].angle) * length
 
         g.lineWidth = dropWidth * drops[i].depth
         g.beginPath();
